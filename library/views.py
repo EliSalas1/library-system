@@ -1,11 +1,13 @@
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
-
-# Create your views here.
-#probando api
-@api_view(['GET'])
-def test_api(request):
-    return Response({"message": "API funcionando"})
+from rest_framework import viewsets
+from .models import Book, Loan
+from .serializers import BookSerializer, LoanSerializer
 
 
+class BookViewSet(viewsets.ModelViewSet):
+    queryset = Book.objects.all()
+    serializer_class = BookSerializer
 
+
+class LoanViewSet(viewsets.ModelViewSet):
+    queryset = Loan.objects.all()
+    serializer_class = LoanSerializer

@@ -1,6 +1,8 @@
-from django.urls import path
-from .views import test_api
+from rest_framework.routers import DefaultRouter
+from .views import BookViewSet, LoanViewSet
 
-urlpatterns = [
-    path('test/', test_api),
-] 
+router = DefaultRouter()
+router.register(r'books', BookViewSet)
+router.register(r'loans', LoanViewSet)
+
+urlpatterns = router.urls
