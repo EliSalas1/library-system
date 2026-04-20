@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -10,6 +11,7 @@ from datetime import timedelta
 class LoanViewSet(viewsets.ModelViewSet):
     queryset = Loan.objects.all()
     serializer_class = LoanSerializer
+    permission_classes = [IsAuthenticated] #Solo usuarios
 
     # 🔹 DEVOLVER LIBRO
     @action(detail=True, methods=['post'])
@@ -45,6 +47,11 @@ class LoanViewSet(viewsets.ModelViewSet):
 class BookViewSet(viewsets.ModelViewSet):
     queryset = Book.objects.all()
     serializer_class = BookSerializer
+    
+    def get_permissions(self):
+        if self.action in ['list', 'retrieve']:
+            return [AllowAny()]  # cualquiera puede ver
+        return [IsAdminUser()]  #  solo admin puede crear/editar/eliminar
 
     def get_queryset(self):
         queryset = super().get_queryset()
