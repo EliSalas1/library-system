@@ -6,7 +6,7 @@ API REST desarrollada con Django REST Framework para la gestión de libros y pr�
 
 ## 🚀 Tecnologías utilizadas 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/tu-usuario/library-system/main/assets/banner.png"/>
+  <img src="assets/banner.png"/>
 </p>
 <p align="center"> <img src="https://readme-typing-svg.herokuapp.com/?lines=Library+System+API;Django+REST+Backend;Docker+%2B+PostgreSQL&center=true&width=500&height=50"> </p> <p align="center"> <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white"/> <img src="https://img.shields.io/badge/Django-REST-092E20?logo=django&logoColor=white"/> <img src="https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-Container-2496ED?logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/Status-Completed-success"/> </p>
 
