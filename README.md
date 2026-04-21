@@ -11,15 +11,15 @@
 
   <h2> Tecnologías utilizadas</h2>
 
-  <p>
+  <p style="text-align: center;">
     <img src="assets/banner.png" alt="Banner del sistema">
   </p>
 
-  <p>
+  <p style="text-align: center;">
     <img src="https://readme-typing-svg.herokuapp.com/?lines=Library+System+API;Django+REST+Backend;Docker+%2B+PostgreSQL&amp;center=true&amp;width=500&amp;height=50" alt="Typing SVG">
   </p>
 
-  <p>
+  <p style="text-align: center;">
     <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python&amp;logoColor=white">
     <img src="https://img.shields.io/badge/Django-REST-092E20?logo=django&amp;logoColor=white">
     <img src="https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql&amp;logoColor=white">
