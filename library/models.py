@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 class Book(models.Model):
     title = models.CharField(max_length=255)
     author = models.CharField(max_length=255)
@@ -16,16 +17,29 @@ class Book(models.Model):
 
 class Loan(models.Model):
     STATUS_CHOICES = [
-        ('activo', 'Activo'),
-        ('returned', 'Returned'),
+        ('active', 'Active'),
         ('partial', 'Partial'),
+        ('returned', 'Returned'),
     ]
 
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     loan_date = models.DateTimeField(auto_now_add=True)
+    due_date = models.DateTimeField(null=True, blank=True)
     return_date = models.DateTimeField(null=True, blank=True)
+
+    quantity = models.PositiveIntegerField(default=1)
+    returned_quantity = models.PositiveIntegerField(default=0)
+
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='active')
+
+    def update_status(self):
+        if self.returned_quantity == 0:
+            self.status = 'active'
+        elif self.returned_quantity < self.quantity:
+            self.status = 'partial'
+        else:
+            self.status = 'returned'
 
     def __str__(self):
         return f"{self.book.title} - {self.user.username}"
