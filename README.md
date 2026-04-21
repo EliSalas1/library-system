@@ -174,20 +174,30 @@ GET /api/books/?year=2020</code></pre>
   <h2>📁 Estructura del proyecto</h2>
   <pre><code>library-system/
 │
-├── config/           # Configuración principal Django
-├── library/          # App principal
+├── config/                 # Configuración principal Django
+├── library/                # App principal (models, views, serializers)
+│
+├── docs/                   # Documentación técnica
+│   └── Documentacion_Tecnica.pdf
+│
+├── postman/                # Pruebas de API
+│   ├── Library_System.postman_collection.json
+│   └── Library_System.postman_environment.json
+│
 ├── Dockerfile
 ├── docker-compose.yml
 ├── requirements.txt
+├── .env.example
+├── .gitignore
 └── README.md</code></pre>
 
   <hr>
-  
+
   <h2> Archivos incluidos</h2>
 <ul>
   <li>Documentación técnica (PDF) en carpeta <code>/docs</code></li>
   <li>Colección Postman en carpeta <code>/postman</code></li>
-  <li>Archivo de entorno de ejemplo (<code>.env</code>)</li>
+  <li>Archivo de entorno de ejemplo (<code>.env.example</code>)</li>
 </ul>
 
   <h2>📌 Notas importantes</h2>
