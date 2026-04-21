@@ -1,9 +1,8 @@
 <style>
   .readme {
   max-width: 900px;
-  margin: 40px auto; /* más aire arriba y abajo */
-  padding: 30px;
-  line-height: 1.6;
+  margin: 40px auto; /* mejor que 0 auto */
+  padding: 20px;
 }
 
   .center {
@@ -16,10 +15,6 @@
     gap: 8px;
     flex-wrap: wrap;
   }
-
-  .badges img {
-  height: 25px;
-}
 </style>
 
 <section class="readme">
@@ -40,7 +35,7 @@
   </p>
 
   <p class="center">
-  <img src="assets/banner.png" alt="Banner del sistema" style="max-width:100%; height:auto;">
+  <img src="https://readme-typing-svg.herokuapp.com/?lines=Library+System+API;Django+REST+Backend;Docker+%2B+PostgreSQL&center=true&width=500&height=50">
 </p>
 
 <div class="badges">
