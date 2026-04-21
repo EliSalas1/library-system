@@ -1,3 +1,27 @@
+<style>
+  .readme {
+  max-width: 900px;
+  margin: 40px auto; /* más aire arriba y abajo */
+  padding: 30px;
+  line-height: 1.6;
+}
+
+  .center {
+    text-align: center;
+  }
+
+  .badges {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .badges img {
+  height: 25px;
+}
+</style>
+
 <section class="readme">
 
   <h1> Sistema de Gestión de Préstamos de Libros</h1>
@@ -15,17 +39,17 @@
     <img src="assets/banner.png" alt="Banner del sistema">
   </p>
 
-  <p style="text-align: center;">
-    <img src="https://readme-typing-svg.herokuapp.com/?lines=Library+System+API;Django+REST+Backend;Docker+%2B+PostgreSQL&amp;center=true&amp;width=500&amp;height=50" alt="Typing SVG">
-  </p>
+  <p class="center">
+  <img src="assets/banner.png" alt="Banner del sistema" style="max-width:100%; height:auto;">
+</p>
 
-  <p style="text-align: center;">
-    <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python&amp;logoColor=white">
-    <img src="https://img.shields.io/badge/Django-REST-092E20?logo=django&amp;logoColor=white">
-    <img src="https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql&amp;logoColor=white">
-    <img src="https://img.shields.io/badge/Docker-Container-2496ED?logo=docker&amp;logoColor=white">
-    <img src="https://img.shields.io/badge/Status-Completed-success">
-  </p>
+<div class="badges">
+  <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white">
+  <img src="https://img.shields.io/badge/Django-REST-092E20?logo=django&logoColor=white">
+  <img src="https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql&logoColor=white">
+  <img src="https://img.shields.io/badge/Docker-Container-2496ED?logo=docker&logoColor=white">
+  <img src="https://img.shields.io/badge/Status-Completed-success">
+</div>
 
   <hr>
 
