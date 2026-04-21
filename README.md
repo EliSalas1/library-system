@@ -1,22 +1,3 @@
-<style>
-  .readme {
-  max-width: 900px;
-  margin: 40px auto; /* mejor que 0 auto */
-  padding: 20px;
-}
-
-  .center {
-    text-align: center;
-  }
-
-  .badges {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-</style>
-
 <section class="readme">
 
   <h1> Sistema de Gestión de Préstamos de Libros</h1>
@@ -30,21 +11,21 @@
 
   <h2> Tecnologías utilizadas</h2>
 
-  <p style="text-align: center;">
-    <img src="assets/banner.png" alt="Banner del sistema">
-  </p>
+ <p align="center">
+  <img src="assets/banner.png" alt="Banner del sistema" width="100%">
+</p>
 
-  <p class="center">
+<p align="center">
   <img src="https://readme-typing-svg.herokuapp.com/?lines=Library+System+API;Django+REST+Backend;Docker+%2B+PostgreSQL&center=true&width=500&height=50">
 </p>
 
-<div class="badges">
+<p align="center">
   <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white">
   <img src="https://img.shields.io/badge/Django-REST-092E20?logo=django&logoColor=white">
   <img src="https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql&logoColor=white">
   <img src="https://img.shields.io/badge/Docker-Container-2496ED?logo=docker&logoColor=white">
   <img src="https://img.shields.io/badge/Status-Completed-success">
-</div>
+</p>
 
   <hr>
 
