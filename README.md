@@ -1,203 +1,221 @@
-# 📚 Sistema de Gestión de Préstamos de Libros
+<section class="readme">
 
-API REST desarrollada con Django REST Framework para la gestión de libros y préstamos, permitiendo el control de disponibilidad, devoluciones y extensiones de préstamos.
+  <h1> Sistema de Gestión de Préstamos de Libros</h1>
+  <p>
+    API REST desarrollada con <strong>Django REST Framework</strong> para la gestión de libros y préstamos,
+    permitiendo el control de disponibilidad, devoluciones parciales y completas, así como la extensión de préstamos.
+    La solución implementa validaciones de negocio, control de acceso por roles y pruebas funcionales mediante Postman.
+  </p>
 
----
+  <hr>
 
-## 🚀 Tecnologías utilizadas 
-<p align="center">
-  <img src="assets/banner.png"/>
-</p>
-<p align="center"> <img src="https://readme-typing-svg.herokuapp.com/?lines=Library+System+API;Django+REST+Backend;Docker+%2B+PostgreSQL&center=true&width=500&height=50"> </p> <p align="center"> <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python&logoColor=white"/> <img src="https://img.shields.io/badge/Django-REST-092E20?logo=django&logoColor=white"/> <img src="https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql&logoColor=white"/> <img src="https://img.shields.io/badge/Docker-Container-2496ED?logo=docker&logoColor=white"/> <img src="https://img.shields.io/badge/Status-Completed-success"/> </p>
+  <h2> Tecnologías utilizadas</h2>
 
----
+  <p>
+    <img src="assets/banner.png" alt="Banner del sistema">
+  </p>
 
-## 📦 Funcionalidades principales
+  <p>
+    <img src="https://readme-typing-svg.herokuapp.com/?lines=Library+System+API;Django+REST+Backend;Docker+%2B+PostgreSQL&amp;center=true&amp;width=500&amp;height=50" alt="Typing SVG">
+  </p>
 
-### 📚 Gestión de Libros
+  <p>
+    <img src="https://img.shields.io/badge/Python-3.11-blue?logo=python&amp;logoColor=white">
+    <img src="https://img.shields.io/badge/Django-REST-092E20?logo=django&amp;logoColor=white">
+    <img src="https://img.shields.io/badge/PostgreSQL-Database-336791?logo=postgresql&amp;logoColor=white">
+    <img src="https://img.shields.io/badge/Docker-Container-2496ED?logo=docker&amp;logoColor=white">
+    <img src="https://img.shields.io/badge/Status-Completed-success">
+  </p>
 
-* Crear, editar, eliminar libros (solo administradores)
-* Listar libros disponibles (público)
-* Filtros por:
+  <hr>
 
-  * Autor
-  * Año
-* Carga de imagen por libro
-* Control de inventario (copias totales y disponibles)
+  <h2> Funcionalidades principales</h2>
 
----
+  <h3> Gestión de Libros</h3>
+  <ul>
+    <li>Crear, editar y eliminar libros (solo administradores)</li>
+    <li>Listar libros disponibles (público)</li>
+    <li>Filtros por:
+      <ul>
+        <li>Autor</li>
+        <li>Año</li>
+      </ul>
+    </li>
+    <li>Carga de imagen por libro (validación de tipo y tamaño)</li>
+    <li>Control de inventario (copias totales y disponibles)</li>
+  </ul>
 
-### 📦 Gestión de Préstamos
+  <hr>
 
-* Crear préstamo (usuario autenticado, soporta múltiples copias)
-* Devolver libro (total)
-* Devolución parcial de préstamo
-* Extender préstamo (+7 días)
+  <h3> Gestión de Préstamos</h3>
+  <ul>
+    <li>Crear préstamo (usuario autenticado, soporta múltiples copias)</li>
+    <li>Validación de disponibilidad (no permite préstamos sin stock)</li>
+    <li>Devolución total de préstamo</li>
+    <li>Devolución parcial con actualización dinámica del inventario</li>
+    <li>Extensión de préstamos (+7 días)</li>
+  </ul>
 
-**Estados:**
+  <p><strong>Estados del préstamo:</strong></p>
+  <ul>
+    <li><code>active</code></li>
+    <li><code>partial</code></li>
+    <li><code>returned</code></li>
+  </ul>
 
-* `active`
-* `partial`
-* `returned`
----
+  <hr>
 
-### 🔐 Seguridad y control de acceso
+  <h3> Seguridad y control de acceso</h3>
+  <ul>
+    <li>Autenticación requerida para operaciones de préstamos</li>
+  </ul>
 
-* Autenticación requerida para préstamos
+  <p><strong>Roles:</strong></p>
+  <ul>
+    <li><strong>Admin/Staff:</strong> gestionan libros y consultan todos los préstamos</li>
+    <li><strong>Usuario:</strong> solo puede consultar y operar sus propios préstamos</li>
+  </ul>
 
-**Roles:**
+  <p><strong>Reglas de seguridad:</strong></p>
+  <ul>
+    <li>Un usuario no puede acceder a préstamos de otros</li>
+    <li>Si intenta hacerlo → <code>404 Not Found</code></li>
+    <li>Solo administradores pueden gestionar libros → <code>403 Forbidden</code></li>
+  </ul>
 
-* **Admin/Staff:** gestionan libros y ven todos los préstamos
-* **Usuario:** solo puede ver y operar sobre sus propios préstamos
+  <hr>
 
-**Regla de seguridad:**
+  <h2>🐳 Instalación con Docker</h2>
 
-* Un usuario no puede acceder a préstamos de otros
-* Si intenta hacerlo → `404 Not Found`
+  <h3>1. Clonar repositorio</h3>
+  <pre><code>git clone https://github.com/EliSalas1/library-system.git
+cd library-system</code></pre>
 
----
+  <h3>2. Construir y levantar contenedores</h3>
+  <pre><code>docker-compose up --build</code></pre>
 
-## 🐳 Instalación con Docker
+  <h3>3. Ejecutar migraciones</h3>
+  <pre><code>docker-compose exec web python manage.py migrate</code></pre>
 
-### 1. Clonar repositorio
+  <h3>4. Crear superusuario</h3>
+  <pre><code>docker-compose exec web python manage.py createsuperuser</code></pre>
 
-```bash
-git clone https://github.com/EliSalas1/library-system.git
-cd library-system
-```
+  <hr>
 
-### 2. Construir y levantar contenedores
+  <h2>🌐 Acceso al sistema</h2>
+  <ul>
+    <li>API: <a href="http://localhost:8000/api/" target="_blank">http://localhost:8000/api/</a></li>
+    <li>Admin Django: <a href="http://localhost:8000/admin/" target="_blank">http://localhost:8000/admin/</a></li>
+  </ul>
 
-```bash
-docker-compose up --build
-```
+  <hr>
 
-### 3. Ejecutar migraciones
+  <h2>🔑 Autenticación</h2>
+  <p>La API utiliza:</p>
+  <ul>
+    <li>Session Authentication</li>
+    <li>Basic Authentication</li>
+  </ul>
 
-```bash
-docker-compose exec web python manage.py migrate
-```
+  <p><strong>Para pruebas:</strong></p>
+  <ul>
+    <li>Navegador → iniciar sesión en <code>/api/</code> o <code>/admin/</code></li>
+    <li>Postman → usar <strong>Basic Auth</strong></li>
+  </ul>
 
-### 4. Crear superusuario
+  <hr>
 
-```bash
-docker-compose exec web python manage.py createsuperuser
-```
+  <h2>📡 Endpoints principales</h2>
 
----
-
-## 🌐 Acceso al sistema
-
-* API: http://localhost:8000/api/
-* Admin Django: http://localhost:8000/admin/
-
----
-
-## 🔑 Autenticación
-
-La API utiliza:
-
-* Session Authentication
-* Basic Authentication
-
-**Para pruebas:**
-
-* Navegador → iniciar sesión en `/api/` o `/admin/`
-* Postman → usar **Basic Auth**
-
----
-
-## 📡 Endpoints principales
-
-### 📚 Libros
-
-```bash
-GET     /api/books/
-POST    /api/books/
+  <h3> Libros</h3>
+  <pre><code>GET     /api/books/
+POST    /api/books/        (soporta imagen - multipart/form-data)
 GET     /api/books/{id}/
-PUT     /api/books/{id}/
-DELETE  /api/books/{id}/
-```
+PATCH   /api/books/{id}/
+DELETE  /api/books/{id}/</code></pre>
 
----
+  <hr>
 
-### 📦 Préstamos
-
-```bash
-GET     /api/loans/
+  <h3> Préstamos</h3>
+  <pre><code>GET     /api/loans/
 POST    /api/loans/
-GET     /api/loans/{id}/
-```
+GET     /api/loans/{id}/</code></pre>
 
----
+  <hr>
 
-### 🔹 Acciones personalizadas
-
-```bash
+  <h3> Acciones personalizadas</h3>
+  <pre><code>POST /api/loans/{id}/partial_return/
 POST /api/loans/{id}/return_book/
-POST /api/loans/{id}/extend/
-POST /api/loans/{id}/partial_return/
-```
+POST /api/loans/{id}/extend/</code></pre>
 
----
+  <hr>
 
-## 🔍 Filtros disponibles
+  <h2>🔍 Filtros disponibles</h2>
+  <pre><code>GET /api/books/?author=Gabriel
+GET /api/books/?year=2020</code></pre>
 
-```bash
-GET /api/books/?author=Gabriel
-GET /api/books/?year=2020
-```
+  <hr>
 
----
+  <h2>🧪 Pruebas</h2>
+  <p>Se incluye colección de Postman con:</p>
+  <ul>
+    <li>Flujo completo de préstamos</li>
+    <li>Pruebas de devolución parcial y total</li>
+    <li>Pruebas de extensión de préstamos</li>
+    <li>Validación de carga de imágenes</li>
+    <li>Validación de stock (sin disponibilidad)</li>
+    <li>Casos de error (datos inválidos, cantidades incorrectas)</li>
+    <li>Pruebas de seguridad (acceso restringido por usuario)</li>
+    <li>Uso de variables de entorno y scripts de validación</li>
+  </ul>
 
-## 🧪 Pruebas
+  <hr>
 
-Se incluye colección de Postman con:
-
-* Creación de libros
-* Creación de préstamos
-* Devolución
-* Extensión
-* Casos de error
-* Validaciones
-
----
-
-## 📁 Estructura del proyecto
-
-```bash
-library-system/
+  <h2>📁 Estructura del proyecto</h2>
+  <pre><code>library-system/
 │
 ├── config/           # Configuración principal Django
 ├── library/          # App principal
 ├── Dockerfile
 ├── docker-compose.yml
 ├── requirements.txt
-└── README.md
-```
+└── README.md</code></pre>
 
----
+  <hr>
+  
+  <h2> Archivos incluidos</h2>
+<ul>
+  <li>Documentación técnica (PDF) en carpeta <code>/docs</code></li>
+  <li>Colección Postman en carpeta <code>/postman</code></li>
+  <li>Archivo de entorno de ejemplo (<code>.env</code>)</li>
+</ul>
 
-## 📌 Notas importantes
+  <h2>📌 Notas importantes</h2>
+  <ul>
+    <li>Control automático de disponibilidad de libros</li>
+    <li>No se permiten préstamos sin stock</li>
+    <li>Soporte para múltiples copias por préstamo</li>
+    <li>Devoluciones parciales con actualización de inventario</li>
+    <li>Validación de imágenes (tipo y tamaño máximo)</li>
+    <li>Seguridad basada en roles y filtrado por queryset</li>
+  </ul>
 
-* Control automático de disponibilidad de libros
-* No se permiten préstamos sin stock
-* Usuarios solo pueden operar sus propios préstamos
-* Validación de imágenes (tipo y tamaño)
+  <hr>
 
----
+  <h2>📄 Documentación adicional</h2>
+  <p>Se incluye documentación técnica en formato PDF con:</p>
+  <ul>
+    <li>Arquitectura del sistema</li>
+    <li>Diagramas (ER, clases y flujo)</li>
+    <li>Requerimientos funcionales y no funcionales</li>
+    <li>Criterios de aceptación</li>
+    <li>Matriz de pruebas</li>
+    <li>Casos de uso y actores del sistema</li>
+  </ul>
 
-## 📄 Documentación adicional
+  <hr>
 
-Se incluye documentación técnica en PDF con:
+  <h2> Autor: Salas Chacón Esther Elizabeth</h2>
+  <p>Proyecto desarrollado como prueba técnica backend.</p>
 
-* Diagramas
-* Requerimientos funcionales
-* Matriz de pruebas
-* Casos de uso
-
----
-
-## 👩‍💻 Autor
-
-Proyecto desarrollado como prueba técnica backend.
+</section>

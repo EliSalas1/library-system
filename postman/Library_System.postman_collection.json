@@ -1,0 +1,1761 @@
+{
+  "info": {
+    "_postman_id": "01a5f904-0ba7-4d8e-a0b6-919c67610319",
+    "name": "Library System API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "31878884"
+  },
+  "item": [
+    {
+      "name": "01 - Books",
+      "item": [
+        {
+          "name": "Create Book (Admin)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"timestamp\", Date.now());"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Book id exists\", function () {\r",
+                  "    pm.expect(data.id).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.environment.set(\"book_id\", data.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{admin_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{admin_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \" Cuaderno de viaje {{timestamp}}\",\r\n  \"author\": \"Compás, S.\",\r\n  \"year\": 2002,\r\n  \"description\": \"Ficción\",\r\n  \"total_copies\": 5,\r\n  \"available_copies\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/books/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "List Book (Admin)",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{admin_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{admin_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/api/books/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "View Book (User)",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "{{base_url}}/api/books/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter Books by Author",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response is an array\", function () {\r",
+                  "    pm.expect(data).to.be.an(\"array\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/books/?author=Robert",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "author",
+                  "value": "Robert"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Filter Books by Year",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response is an array\", function () {\r",
+                  "    pm.expect(data).to.be.an(\"array\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/books/?year=2008",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                ""
+              ],
+              "query": [
+                {
+                  "key": "year",
+                  "value": "2008"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Patch Book (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Description updated\", function () {\r",
+                  "    pm.expect(data.description).to.eql(\"Descripción actualizada desde Postman\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Available copies updated\", function () {\r",
+                  "    pm.expect(data.available_copies).to.eql(4);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{admin_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{admin_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"description\": \"Descripción actualizada desde Postman\",\r\n  \"available_copies\": 4\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/books/{{book_id}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                "{{book_id}}",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Book (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {\r",
+                  "    pm.response.to.have.status(204);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{admin_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{admin_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/books/{{book_id}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                "{{book_id}}",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Loan Adm - Without Stock",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"timestamp\", Date.now());"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.environment.set(\"no_stock_book_id\", data.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{admin_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{admin_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"No Stock Book {{timestamp}}\",\r\n  \"author\": \"Out Of Stock Author\",\r\n  \"year\": 2024,\r\n  \"description\": \"Libro sin disponibilidad\",\r\n  \"total_copies\": 1,\r\n  \"available_copies\": 0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/books/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Book with Image (Admin)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Book created successfully\", function () {\r",
+                  "    pm.expect(data.id).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Image field exists\", function () {\r",
+                  "    pm.expect(data.image).to.exist;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{admin_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{admin_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Imagen de prueba",
+                  "type": "text",
+                  "uuid": "e64e61ec-fe6f-4ce4-8f2e-207e37efd981"
+                },
+                {
+                  "key": "author",
+                  "value": "Robert C. Martin",
+                  "type": "text",
+                  "uuid": "286ff4da-ef4e-4bff-bd3b-617325cd3bf6"
+                },
+                {
+                  "key": "year",
+                  "value": "2015",
+                  "type": "text",
+                  "uuid": "3cbfc7e3-43f3-4413-b0cc-0f793d64eedb"
+                },
+                {
+                  "key": "description",
+                  "value": "Libro con imagen de prueba",
+                  "type": "text",
+                  "uuid": "860a035d-4b81-4911-8ab5-90631a117f39"
+                },
+                {
+                  "key": "total_copies",
+                  "value": "5",
+                  "type": "text",
+                  "uuid": "b931f8d0-7a9b-4804-b1a3-a4425c7efd7c"
+                },
+                {
+                  "key": "available_copies",
+                  "value": "5",
+                  "type": "text",
+                  "uuid": "3beda6d3-0fd7-4517-94e6-ba90284cc0d8"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "553b3f30-9323-4d19-845e-4ca2c3a42540",
+                  "src": "/C:/Users/eliza/library-system/assets/portadalibro.jpg"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/books/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02 - Loans",
+      "item": [
+        {
+          "name": "Create Loan (User)- Main Flow",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Loan status is active\", function () {\r",
+                  "    pm.expect(data.status).to.eql(\"active\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Loan quantity is 3\", function () {\r",
+                  "    pm.expect(data.quantity).to.eql(3);\r",
+                  "});\r",
+                  "\r",
+                  "pm.environment.set(\"loan_id\", data.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"book\": {{book_id}},\r\n  \"quantity\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loans/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Loan - Security",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Security loan created\", function () {\r",
+                  "    pm.expect(data.id).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.environment.set(\"security_loan_id\", data.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"book\": {{book_id}},\r\n  \"quantity\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loans/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Partial Return",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Loan status is partial\", function () {\r",
+                  "    pm.expect(data.status).to.eql(\"partial\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Returned quantity is 1\", function () {\r",
+                  "    pm.expect(data.returned_quantity).to.eql(1);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Pending quantity is 2\", function () {\r",
+                  "    pm.expect(data.pending_quantity).to.eql(2);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"quantity\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{loan_id}}/partial_return/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{loan_id}}",
+                "partial_return",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Extend Loan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response contains due_date\", function () {\r",
+                  "    pm.expect(data.due_date).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains success message\", function () {\r",
+                  "    pm.expect(data.message).to.exist;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{loan_id}}/extend/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{loan_id}}",
+                "extend",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Return Book",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {\r",
+                  "    pm.response.to.have.status(200);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Loan status is returned\", function () {\r",
+                  "    pm.expect(data.status).to.eql(\"returned\");\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Returned quantity exists\", function () {\r",
+                  "    pm.expect(data.returned_quantity).to.exist;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{loan_id}}/return_book/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{loan_id}}",
+                "return_book",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Loan Error - Without Stock",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Error exists\", function () {\r",
+                  "    pm.expect(data.non_field_errors || data.error || data.detail).to.exist;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"book\": {{no_stock_book_id}},\r\n  \"quantity\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/books/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03 - Error Cases",
+      "item": [
+        {
+          "name": "Extend Returned Loan -Main Flow",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response contains error\", function () {\r",
+                  "    pm.expect(data.error).to.exist;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{loan_id}}/extend/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{loan_id}}",
+                "extend",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "1. Partial Return - Missing Quantity",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response contains error\", function () {\r",
+                  "    pm.expect(data.error).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Error message is correct\", function () {\r",
+                  "    pm.expect(data.error).to.include(\"cantidad\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{error_loan_id}}/partial_return/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{error_loan_id}}",
+                "partial_return",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Partial Return - Invalid Quantity",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response contains error\", function () {\r",
+                  "    pm.expect(data.error).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Error message is correct\", function () {\r",
+                  "    pm.expect(data.error).to.include(\"cantidad\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"quantity\": 0\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{error_loan_id}}/partial_return/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{error_loan_id}}",
+                "partial_return",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2.1 Partial Return - Invalid Quantity Negative",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response contains error\", function () {\r",
+                  "    pm.expect(data.error).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Error message is correct\", function () {\r",
+                  "    pm.expect(data.error).to.include(\"cantidad\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"quantity\": -1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{error_loan_id}}/partial_return/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{error_loan_id}}",
+                "partial_return",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Partial Return - More Than Pending",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Response contains error\", function () {\r",
+                  "    pm.expect(data.error).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Error message mentions pending limit\", function () {\r",
+                  "    pm.expect(data.error).to.include(\"pendiente\");\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"quantity\": 5\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{error_loan_id}}/partial_return/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{error_loan_id}}",
+                "partial_return",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Loan - Error Cases",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Error loan created\", function () {\r",
+                  "    pm.expect(data.id).to.exist;\r",
+                  "});\r",
+                  "\r",
+                  "pm.environment.set(\"error_loan_id\", data.id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"book\": {{book_id}},\r\n  \"quantity\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loans/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Book with Invalid Image",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {\r",
+                  "    pm.response.to.have.status(400);\r",
+                  "});\r",
+                  "\r",
+                  "const data = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Image validation error exists\", function () {\r",
+                  "    pm.expect(data.image).to.exist;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{admin_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{admin_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "title",
+                  "value": "Imagen de prueba",
+                  "type": "text",
+                  "uuid": "e64e61ec-fe6f-4ce4-8f2e-207e37efd981"
+                },
+                {
+                  "key": "author",
+                  "value": "Robert C. Martin",
+                  "type": "text",
+                  "uuid": "286ff4da-ef4e-4bff-bd3b-617325cd3bf6"
+                },
+                {
+                  "key": "year",
+                  "value": "2015",
+                  "type": "text",
+                  "uuid": "3cbfc7e3-43f3-4413-b0cc-0f793d64eedb"
+                },
+                {
+                  "key": "description",
+                  "value": "Libro con imagen de prueba",
+                  "type": "text",
+                  "uuid": "860a035d-4b81-4911-8ab5-90631a117f39"
+                },
+                {
+                  "key": "total_copies",
+                  "value": "5",
+                  "type": "text",
+                  "uuid": "b931f8d0-7a9b-4804-b1a3-a4425c7efd7c"
+                },
+                {
+                  "key": "available_copies",
+                  "value": "5",
+                  "type": "text",
+                  "uuid": "3beda6d3-0fd7-4517-94e6-ba90284cc0d8"
+                },
+                {
+                  "key": "image",
+                  "type": "file",
+                  "uuid": "553b3f30-9323-4d19-845e-4ca2c3a42540",
+                  "src": "/C:/Users/eliza/library-system/assets/banner.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{base_url}}/api/books/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04 - Security",
+      "item": [
+        {
+          "name": "Create Book (User Forbidden)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"timestamp\", Date.now());"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 403\", function () {\r",
+                  "    pm.response.to.have.status(403);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{user_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{user_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"title\": \"Unauthorized Book {{timestamp}}\",\r\n  \"author\": \"Test Author\",\r\n  \"year\": 2024,\r\n  \"description\": \"Intento de creación por user normal\",\r\n  \"total_copies\": 2,\r\n  \"available_copies\": 2\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/books/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "books",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Other User Loan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{other_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{other_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{security_loan_id}}/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{security_loan_id}}",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Partial Return Other User Loan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{other_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{other_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"quantity\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{security_loan_id}}/partial_return/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{security_loan_id}}",
+                "partial_return",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Return Other User Loan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{other_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{other_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{security_loan_id}}/return_book/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{security_loan_id}}",
+                "return_book",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Extend Other User Loan",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "{{other_password}}",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "{{other_username}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/api/loans/{{security_loan_id}}/extend/",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "loans",
+                "{{security_loan_id}}",
+                "extend",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
